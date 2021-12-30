@@ -13,33 +13,31 @@ class Home extends StatelessWidget {
         child: (Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             const Text(
               "Home Screen",
               style: const TextStyle(color: Colors.black),
             ),
-
             const SizedBox(
               height: 8,
             ),
-
-            ElevatedButton(onPressed: () {},
-                child: const Text("Next Screen")
-            ),
-
-            const SizedBox(
-              height: 8,
-            ),
-
             ElevatedButton(onPressed: () {
-              //arguments 내보내기
-              Get.back(result: "This is from Home Screen");
-            }, child: const Text("Back To Main")),
-
-            //arguments 넘겨받기
-            Text(
-              "${Get.arguments.toString()}"
+              Get.toNamed("/nextScreen");
+            }, child: const Text("Next Screen")),
+            const SizedBox(
+              height: 8,
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Back To Main")),
+
+            Text(
+              "channel : ${Get.parameters['channel']}, "+
+                  "\ncontent : ${Get.parameters['content']}"+
+              "\nsomeValue : ${Get.parameters['someValue']}",
+            ),
+
           ],
         )),
       ),

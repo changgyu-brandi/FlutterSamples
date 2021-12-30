@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/home.dart';
-import 'package:flutter_samples/person.dart';
+import 'package:flutter_samples/next_screen.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -13,10 +13,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      title: 'Navigation',
+      initialRoute: "/",
+      defaultTransition: Transition.zoom,
+      getPages: [
+        GetPage(name: '/', page: () => MyApp()),
+        GetPage(name: '/home', page: () => Home()),
+        GetPage(name: '/home/:someValue', page: () => Home()),
+        GetPage(
+            name: '/nextScreen',
+            page: () => NextScreen(),
+            transition: Transition.rightToLeft),
+      ],
+      //unknownRoute: GetPage(name: '/notfound', page: ()=>(UnknownPage)),
       home: const MyHomePage(title: 'Navigation'),
     );
   }
@@ -32,7 +41,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             ElevatedButton(
               child: Text("Go To Home"),
-              onPressed: () async {
-                var person = Person(name: "chang gyu", age: 30);
-                var homeData = await Get.to(
-                    Home(),
-                  transition: Transition.rightToLeft,
-                    arguments: person
-                );
-                print("Received From Home : ${homeData}");
+              onPressed: () {
+                Get.toNamed("/home?channel=ChangGyu&content=Flutter");
+                //Get.toNamed("/home/test");
               },
             )
           ],
