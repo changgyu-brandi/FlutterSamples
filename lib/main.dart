@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/home.dart';
+import 'package:flutter_samples/person.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,12 +12,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Navigation'),
     );
   }
 }
@@ -40,12 +43,18 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-                'Master Branch'
-            ),
-            Text(
-              'Master Branch'
-            ),
+            ElevatedButton(
+              child: Text("Go To Home"),
+              onPressed: () async {
+                var person = Person(name: "chang gyu", age: 30);
+                var homeData = await Get.to(
+                    Home(),
+                  transition: Transition.rightToLeft,
+                    arguments: person
+                );
+                print("Received From Home : ${homeData}");
+              },
+            )
           ],
         ),
       ),
