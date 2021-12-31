@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       translations: Message(),
-      title: 'Internationalization',
+      title: 'Localization',
       locale: Locale(Const.language, Const.country),
       fallbackLocale: Locale('en', 'US'),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Internationalization'),
+      home: const MyHomePage(title: 'Localization'),
     );
   }
 }
