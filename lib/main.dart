@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/message.dart';
+import 'package:flutter_samples/my_controller.dart';
+import 'package:flutter_samples/const.dart';
 import 'package:get/get.dart';
+import 'dart:io' show Platform;
 
 void main() {
   runApp(const MyApp());
@@ -10,12 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      translations: Message(),
+      title: 'Internationalization',
+      locale: Locale(Const.language, Const.country),
+      fallbackLocale: Locale('en', 'US'),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Internationalization'),
     );
   }
 }
@@ -31,6 +39,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  MyController myController = Get.put(MyController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +51,20 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-                'Master Branch'
-            ),
-            Text(
-              'Master Branch'
-            ),
+            Text('greeting'.tr),
+
+            ElevatedButton(onPressed: (){
+              myController.changeLanguage(Const.ko_KR.split('_')[0], Const.ko_KR.split('_')[1]);
+            }, child: Text("한국어")),
+
+            ElevatedButton(onPressed: (){
+              myController.changeLanguage(Const.en_US.split('_')[0], Const.en_US.split('_')[1]);
+            }, child: Text("영어")),
+
+            ElevatedButton(onPressed: (){
+              myController.changeLanguage(Const.fr_FR.split('_')[0], Const.fr_FR.split('_')[1]);
+            }, child: Text("프랑스어"))
+
           ],
         ),
       ),
