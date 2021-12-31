@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/my_controller.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -11,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Workers',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Workers'),
     );
   }
 }
@@ -30,6 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  MyController myController = Get.put(MyController());
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +43,23 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-                'Master Branch'
+            ElevatedButton(onPressed: (){
+              myController.increaseCount();
+            }, child: Text("Increase")),
+
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: TextField(
+                onChanged: (value){
+                  myController.typingText.value = value;
+                },
+              ),
             ),
-            Text(
-              'Master Branch'
-            ),
+
+            Obx((){
+              return Text("${myController.count}");
+            })
+
           ],
         ),
       ),
