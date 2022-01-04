@@ -7,6 +7,7 @@ import 'home.dart';
 import 'home_controller_binding.dart';
 
 void main() {
+  //디폴트로 바인딩을 Set 하고 싶을때
   BindingSets().dependencies();
   runApp(const MyApp());
 }
@@ -18,14 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Binding',
-      // getPages: [
-      //   GetPage(name: '/home', page: ()=> Home(), binding: HomeControllerBinding())
-      // ],
       getPages: [
-        GetPage(
-            name: '/home',
-            page: () => Home(),
-            binding: BindingsBuilder(() => {HomeControllerBinding()}))
+        GetPage(name: '/home', page: ()=> Home(), binding: HomeControllerBinding())
       ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
