@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/binding_sets.dart';
+import 'package:flutter_samples/my_controller.dart';
 import 'package:get/get.dart';
 
+import 'home.dart';
+import 'home_controller_binding.dart';
+
 void main() {
+  BindingSets().dependencies();
   runApp(const MyApp());
 }
 
@@ -11,7 +17,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Binding',
+      // getPages: [
+      //   GetPage(name: '/home', page: ()=> Home(), binding: HomeControllerBinding())
+      // ],
+      getPages: [
+        GetPage(
+            name: '/home',
+            page: () => Home(),
+            binding: BindingsBuilder(() => {HomeControllerBinding()}))
+      ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -30,7 +45,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +55,19 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-                'Master Branch'
-            ),
-            Text(
-              'Master Branch'
-            ),
+            Obx(() => Text(
+                'MyController Count is ${Get.find<MyController>().count}')),
+            ElevatedButton(
+                onPressed: () {
+                  Get.find<MyController>().increaseCount();
+                },
+                child: Text('Increase MyController Count')),
+            SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () {
+                  Get.toNamed('/home');
+                },
+                child: Text('Go To Home')),
           ],
         ),
       ),
